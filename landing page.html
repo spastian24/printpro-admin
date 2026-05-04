@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrintPro | Print Your Vision</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      color-scheme: light;
+      --bg: #f2f4f8;
+      --surface: #ffffff;
+      --surface-strong: #f9fafb;
+      --text: #111827;
+      --text-soft: #4b5563;
+      --primary: #dc1b26;
+      --primary-dark: #b81a28;
+      --border: rgba(17,24,39,.08);
+      --shadow: 0 30px 90px rgba(15,23,42,.12);
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: radial-gradient(circle at top left, rgba(255,255,255,.92), transparent 40%),
+                  linear-gradient(180deg, #eef2ff 0%, #f9fafb 100%);
+      color: var(--text);
+    }
+
+    body {
+      line-height: 1.5;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    .page-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    .site-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+      color: white;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      box-shadow: 0 18px 38px rgba(220,27,38,.28);
+    }
+
+    .brand-text {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      font-size: 1.05rem;
+      color: var(--text-soft);
+      position: relative;
+    }
+
+    .nav-links a,
+    .dropdown-toggle {
+      text-decoration: none;
+      color: inherit;
+      transition: color .2s ease;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+      padding: 0;
+    }
+
+    .nav-links a:hover,
+    .dropdown-toggle:hover {
+      color: var(--text);
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      flex-direction: column;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 25px 60px rgba(15,23,42,.18);
+      padding: 10px 0;
+      min-width: 190px;
+      z-index: 50;
+    }
+
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      display: flex;
+    }
+
+    .dropdown-menu a {
+      padding: 12px 18px;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+
+    .dropdown-menu a:hover {
+      background: rgba(220,27,38,.05);
+      color: var(--text);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .login-btn {
+      padding: 14px 32px;
+      border: none;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, #ef4444 0%, #dc1b26 100%);
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 20px 40px rgba(220,27,38,.22);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 45px rgba(220,27,38,.25);
+    }
+
+    .hero-section {
+      position: relative;
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      padding: 90px 60px 120px;
+      display: grid;
+      align-items: center;
+      background: url('https://cdn.corenexis.com/files/c/3326388720.png') center/cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,.45) 0%, rgba(15,23,42,.20) 30%, rgba(15,23,42,.65) 100%);
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      padding: 32px 0 32px 48px;
+      color: white;
+      position: relative;
+      z-index: 1;
+      color: white;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .78rem;
+      color: rgba(255,255,255,.9);
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -.05em;
+      color: white;
+    }
+
+    .hero-copy p {
+      margin: 24px 0 34px;
+      max-width: 600px;
+      color: rgba(255,255,255,.85);
+      font-size: 1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 28px;
+      border: none;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, #ef4444 0%, #dc1b26 100%);
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 40px rgba(220,27,38,.2);
+    }
+
+    .hero-highlight {
+      display: inline-grid;
+      padding: 14px 18px;
+      background: rgba(255,255,255,.88);
+      color: #111827;
+      border-radius: 999px;
+      font-size: .95rem;
+      box-shadow: 0 20px 50px rgba(15,23,42,.08);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-card {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: radial-gradient(circle at top right, rgba(255,255,255,.78), transparent 32%),
+                  linear-gradient(180deg, #e11d48 0%, #881337 100%);
+      border: 1px solid rgba(255,255,255,.45);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 14%;
+      left: -28%;
+      width: 220px;
+      height: 220px;
+      border-radius: 180px;
+      background: rgba(255,255,255,.18);
+      filter: blur(8px);
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      right: -20%;
+      bottom: 10%;
+      width: 260px;
+      height: 260px;
+      border-radius: 200px;
+      background: rgba(255,255,255,.15);
+      filter: blur(10px);
+    }
+
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 1;
+      mix-blend-mode: normal;
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17,24,39,.1) 0%, rgba(17,24,39,.25) 100%);
+    }
+
+    .hero-info {
+      position: absolute;
+      left: 20px;
+      bottom: 24px;
+      color: white;
+      display: grid;
+      gap: 14px;
+      max-width: 360px;
+      text-shadow: 0 16px 45px rgba(15,23,42,.45);
+    }
+
+    .hero-info h2 {
+      margin: 0;
+      font-size: 2.1rem;
+      letter-spacing: -.03em;
+    }
+
+    .hero-info span {
+      font-size: .95rem;
+      color: rgba(255,255,255,.9);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.6);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .auth-modal {
+      width: min(980px, 100%);
+      background: #ffffff;
+      border-radius: 32px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 40px 120px rgba(15,23,42,.25);
+      position: relative;
+    }
+
+    .auth-modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #ef4444 0%, #be123c 100%);
+    }
+
+    .modal-content {
+      padding: 44px 40px 40px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.9rem;
+    }
+
+    .auth-form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field-wrap {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field-wrap label {
+      font-size: .92rem;
+      color: var(--text-soft);
+    }
+
+    .field-wrap input {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--text);
+    }
+
+    .field-wrap input:focus {
+      outline: 2px solid rgba(220,27,38,.22);
+      border-color: rgba(220,27,38,.35);
+      background: #fff;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .95rem;
+      color: var(--text-soft);
+    }
+
+    .checkbox-wrap input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .forgot-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: .95rem;
+    }
+
+    .auth-submit {
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc1b26 100%);
+      color: white;
+      padding: 16px 0;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .auth-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(220,27,38,.18);
+    }
+
+    .modal-note {
+      margin-top: 18px;
+      color: var(--text-soft);
+      font-size: .95rem;
+    }
+
+    .modal-note a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .panel-side {
+      background: linear-gradient(180deg, #dc1b26 0%, #b91c1c 100%);
+      color: white;
+      display: grid;
+      place-items: center;
+      padding: 40px;
+      min-height: 100%;
+    }
+
+    .panel-side .panel-inner {
+      max-width: 360px;
+      display: grid;
+      gap: 28px;
+      text-align: center;
+    }
+
+    .panel-side h3 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.05;
+    }
+
+    .panel-side p {
+      margin: 0;
+      color: rgba(255,255,255,.88);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .panel-pill {
+      background: rgba(255,255,255,.12);
+      padding: 14px 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      color: rgba(255,255,255,.9);
+      font-weight: 600;
+      letter-spacing: .01em;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,.92);
+      font-size: 1.1rem;
+      color: #111827;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .close-modal:hover {
+      transform: scale(1.05);
+      background: white;
+    }
+
+    @media (max-width: 960px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 420px;
+      }
+
+      .auth-modal {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-side {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page-wrapper {
+        padding: 24px 16px 40px;
+      }
+
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 18px;
+      }
+
+      .hero-copy h1 {
+        font-size: 3.1rem;
+      }
+
+      .hero-info {
+        left: 16px;
+        right: 16px;
+      }
+
+      .modal-content {
+        padding: 32px 28px 30px;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="site-header">
+      <a href="#" class="brand">
+        <div class="brand-mark">
+          <img src="https://cdn.corenexis.com/files/c/1187917720.png" alt="PrintPro logo" onerror="this.src='https://i.imgur.com/1IOhE6K.png'">
+        </div>
+        <span class="brand-text">PrintPro</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <div class="dropdown">
+          <button class="dropdown-toggle" type="button">Products</button>
+          <div class="dropdown-menu">
+            <a href="#business-cards">Business Cards</a>
+            <a href="#brochures">Brochures</a>
+            <a href="#banners">Banners</a>
+          </div>
+        </div>
+        <a href="#contact">Contact Us</a>
+      </nav>
+      <button class="login-btn" id="openLogin">Login</button>
+    </header>
+
+    <main class="hero-section">
+      <div class="hero-copy">
+        <div class="eyebrow">PRINT PRO</div>
+        <h1>PRINT YOUR VISION</h1>
+        <p>We bring your ideas to life through high-quality printing and creative solutions. With a passion for precision and design, we specialize in delivering professional prints that help businesses and individuals make a lasting impression.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" id="pressOpenLogin">Print Now</button>
+          <div class="hero-highlight">Fast delivery • Custom designs • Premium quality</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="authOverlay" aria-hidden="true">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="close-modal" id="closeModal" aria-label="Close authentication modal">×</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <p style="margin: 0; color: var(--text-soft); text-transform: uppercase; letter-spacing: .2em; font-size: .8rem;">Welcome back!</p>
+            <h2 id="authTitle">Sign in to your account</h2>
+          </div>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+          <div class="field-wrap">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" type="email" placeholder="Enter your email" required>
+          </div>
+          <div class="field-wrap">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" placeholder="Enter your password" required>
+          </div>
+          <div class="form-footer">
+            <a href="#" class="forgot-link">Forgot Password?</a>
+          </div>
+          <button type="submit" class="auth-submit">Sign in</button>
+          <p class="modal-note">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
+        </form>
+
+        <form id="signupForm" class="auth-form" style="display:none;">
+          <div class="field-row">
+            <div class="field-wrap">
+              <label for="firstName">First Name</label>
+              <input id="firstName" type="text" placeholder="First Name" required>
+            </div>
+            <div class="field-wrap">
+              <label for="lastName">Last Name</label>
+              <input id="lastName" type="text" placeholder="Last Name" required>
+            </div>
+          </div>
+          <div class="field-wrap">
+            <label for="signupPassword">Password</label>
+            <input id="signupPassword" type="password" placeholder="Create a password" required>
+          </div>
+          <div class="field-wrap">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" placeholder="Confirm your password" required>
+          </div>
+          <label class="checkbox-wrap"><input id="agreeTerms" type="checkbox" required> I agree with the terms and services</label>
+          <button type="submit" class="auth-submit">Sign Up</button>
+          <p class="modal-note">Already have an account? <a href="#" id="switchToLogin">Sign in</a></p>
+        </form>
+      </div>
+
+      <aside class="panel-side">
+        <div class="panel-inner">
+          <div class="panel-pill">High quality print solutions</div>
+          <h3>Make every print statement count.</h3>
+          <p>Modern branding, premium finishing, and fast turnaround in a single destination. Join hundreds of customers who trust PrintPro.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const authOverlay = document.getElementById('authOverlay');
+    const openLogin = document.getElementById('openLogin');
+    const pressOpenLogin = document.getElementById('pressOpenLogin');
+    const closeModal = document.getElementById('closeModal');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const switchToSignup = document.getElementById('switchToSignup');
+    const switchToLogin = document.getElementById('switchToLogin');
+
+    function openAuth(mode = 'login') {
+      authOverlay.classList.add('open');
+      authOverlay.setAttribute('aria-hidden', 'false');
+      if (mode === 'signup') {
+        showForm('signupForm');
+      } else {
+        showForm('loginForm');
+      }
+    }
+
+    function closeAuth() {
+      authOverlay.classList.remove('open');
+      authOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function showForm(formId) {
+      if (formId === 'loginForm') {
+        loginForm.style.display = 'grid';
+        signupForm.style.display = 'none';
+      } else {
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'grid';
+      }
+    }
+
+    openLogin.addEventListener('click', () => openAuth('login'));
+    pressOpenLogin.addEventListener('click', () => openAuth('login'));
+    closeModal.addEventListener('click', closeAuth);
+    authOverlay.addEventListener('click', event => {
+      if (event.target === authOverlay) closeAuth();
+    });
+
+    switchToSignup.addEventListener('click', event => {
+      event.preventDefault();
+      showForm('signupForm');
+    });
+    switchToLogin.addEventListener('click', event => {
+      event.preventDefault();
+      showForm('loginForm');
+    });
+
+    tabs.forEach(button => {
+      button.addEventListener('click', () => showForm(button.dataset.target));
+    });
+
+    loginForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      if (!email || !password) {
+        alert('Please enter both email and password.');
+        return;
+      }
+      alert(`Welcome back, ${email}! You are now signed in.`);
+      closeAuth();
+      loginForm.reset();
+    });
+
+    signupForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const agreeTerms = document.getElementById('agreeTerms').checked;
+      if (!firstName || !lastName || !password || !confirmPassword) {
+        alert('Please fill in all fields to create your account.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+      }
+      if (!agreeTerms) {
+        alert('Please agree to the terms and services before signing up.');
+        return;
+      }
+      alert(`Thanks for joining, ${firstName}! Your account has been created.`);
+      closeAuth();
+      signupForm.reset();
+      showForm('loginForm');
+    });
+  </script>
+</body>
+</html>

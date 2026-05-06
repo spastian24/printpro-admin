@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Printing Services Menu with Cart</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f7fa;
+    display: flex;
+    padding: 40px 20px;
+    gap: 30px;
+}
+
+.container {
+    flex: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    color: #222;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.service-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+}
+
+.icon {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.05rem;
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 15px;
+    min-height: 40px;
+}
+
+.price-tag {
+    background: #f0f0f0;
+    color: #222;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.add-btn {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    margin-top: auto;
+}
+
+.add-btn:hover {
+    background: #444;
+}
+
+.cart-sidebar {
+    width: 300px;
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    height: fit-content;
+    position: sticky;
+    top: 40px;
+}
+
+.cart-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f5f7fa;
+    padding-bottom: 10px;
+}
+
+.cart-empty-msg {
+    color: #999;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    background: #e3262e;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Our Printing Services</h2>
+
+    <div class="services-grid">
+
+        <div class="service-card">
+            <div class="icon">📃</div>
+            <h3>Flyers</h3>
+            <p>Simple one-page ads for promotion</p>
+            <div class="price-tag">₱10 – ₱25 / pc</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">💳</div>
+            <h3>Business Cards</h3>
+            <p>Small cards with contact details</p>
+            <div class="price-tag">₱3 – ₱10 / pc</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📘</div>
+            <h3>Brochure</h3>
+            <p>Folded info print about a business</p>
+            <div class="price-tag">₱2 – ₱5 / pc</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🖼️</div>
+            <h3>Posters</h3>
+            <p>Large prints for advertising</p>
+            <div class="price-tag">₱50 – ₱150 each</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📝</div>
+            <h3>Letterhead</h3>
+            <p>Branded paper for official docs</p>
+            <div class="price-tag">₱3 – ₱8 / sheet</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🍽️</div>
+            <h3>Menus</h3>
+            <p>List of food and drinks</p>
+            <div class="price-tag">₱10 – ₱40 each</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🎟️</div>
+            <h3>Tickets</h3>
+            <p>Event and entry passes</p>
+            <div class="price-tag">₱1 – ₱5 each</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">📢</div>
+            <h3>Banners</h3>
+            <p>Large prints for promotions</p>
+            <div class="price-tag">₱150 – ₱300 / sq ft</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+        <div class="service-card">
+            <div class="icon">🎪</div>
+            <h3>Tarpaulin</h3>
+            <p>Large printed banner for ads</p>
+            <div class="price-tag">₱120 – ₱250 / sq ft</div>
+            <button class="add-btn">Add to Cart</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="cart-sidebar">
+    <div class="cart-title">🛒 Your Cart</div>
+
+    <div class="cart-items-list">
+        <p class="cart-empty-msg">Your cart is currently empty.</p>
+    </div>
+
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+    <div style="display: flex; justify-content: space-between; font-weight: bold;">
+        <span>Total:</span>
+        <span>₱0.00</span>
+    </div>
+
+    <a href="#" class="checkout-btn">Proceed to Checkout</a>
+</div>
+
+</body>
+</html>

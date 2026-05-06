@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrintPro Services</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f5f7fb;}
+
+/* NAVBAR */
+.navbar{
+background:#fff;
+padding:8px 0;
+box-shadow:0 2px 10px rgba(0,0,0,0.06);
+position:sticky;
+top:0;
+z-index:1000;
+}
+.navbar .container{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 40px;
+}
+.logo{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:18px;
+font-weight:800;
+color:#c81e1e;
+}
+.logo img{width:34px;height:34px;}
+
+.nav-links{
+display:flex;
+align-items:center;
+gap:14px;
+}
+.nav-links a{
+text-decoration:none;
+color:#333;
+font-weight:600;
+}
+.nav-links a:hover{color:#c81e1e;}
+
+/* ICONS */
+.icon-btn{
+position:relative;
+background:#fff;
+border:none;
+cursor:pointer;
+font-size:18px;
+color:#c81e1e;
+padding:6px 10px;
+border-radius:10px;
+box-shadow:0 6px 14px rgba(0,0,0,0.10);
+}
+.badge-count{
+position:absolute;
+top:-6px;
+right:-6px;
+background:red;
+color:#fff;
+border-radius:50%;
+padding:2px 6px;
+font-size:11px;
+}
+.user-icon{
+font-size:20px;
+color:#c81e1e;
+cursor:pointer;
+}
+
+/* ALERT DROPDOWN */
+.alert-dropdown{
+display:none;
+position:absolute;
+right:40px;
+top:60px;
+background:#fff;
+width:260px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+padding:10px;
+z-index:2000;
+max-height:300px;
+overflow:auto;
+}
+
+/* TITLES */
+.bold-title{font-size:28px;font-weight:900;}
+.highlight{color:#c81e1e;font-weight:800;}
+
+/* GRID */
+.container-main{display:flex;}
+.container{flex:1;padding:30px;}
+
+.services-grid{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.service-card{
+background:#fff;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 10px 20px rgba(0,0,0,0.12);
+transition:.2s;
+}
+.service-card:hover{transform:translateY(-4px);}
+
+.service-card img{
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+.card-body{padding:12px;}
+
+.service-card h3{
+font-size:15px;
+font-weight:800;
+}
+
+.price-tag{
+margin-top:5px;
+color:#c81e1e;
+font-weight:700;
+font-size:13px;
+}
+
+.add-btn{
+margin-top:8px;
+width:100%;
+padding:9px;
+background:#c81e1e;
+color:#fff;
+border:none;
+border-radius:8px;
+font-weight:800;
+cursor:pointer;
+}
+
+/* CART */
+.cart-sidebar{
+width:320px;
+background:#fff;
+border-left:1px solid #eee;
+height:100vh;
+position:sticky;
+top:60px;
+padding:20px;
+}
+.checkout-btn{
+display:block;
+margin-top:15px;
+padding:12px;
+background:#c81e1e;
+color:#fff;
+text-align:center;
+border-radius:10px;
+font-weight:800;
+cursor:pointer;
+}
+
+/* MODALS */
+.modal-bg{
+display:none;
+position:fixed;
+z-index:9999;
+left:0;top:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+}
+.modal-box{
+background:#fff;
+width:420px;
+margin:6% auto;
+padding:20px;
+border-radius:12px;
+}
+
+/* TERMS */
+.terms-link{
+color:#c81e1e;
+font-weight:900;
+text-decoration:underline;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+<div class="container">
+
+<div class="logo">
+<img src="Logo.png"> PrintPro
+</div>
+
+<div class="nav-links">
+<a href="Dashboard.html">Home</a>
+
+<button class="icon-btn" onclick="toggleAlerts()">
+<i class="fas fa-bell"></i>
+<span class="badge-count" id="alertCount">0</span>
+</button>
+
+<i class="fas fa-user user-icon" onclick="openAccount()"></i>
+</div>
+
+</div>
+</nav>
+
+<div id="alertDropdown" class="alert-dropdown"></div>
+
+<!-- MAIN -->
+<div class="container-main">
+
+<div class="container">
+
+<h2 class="bold-title">Our <span class="highlight">Products</span></h2>
+
+<div class="services-grid">
+
+<!-- 9 PRODUCTS -->
+<div class="service-card" data-name="Flyers" data-price="17.5" data-section="flyers"><img src="flyers3.png"><div class="card-body"><h3>Flyers</h3><div class="price-tag">₱10 – ₱25</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Business Cards" data-price="7.5" data-section="business-cards"><img src="businesscards3.jpg"><div class="card-body"><h3>Business Cards</h3><div class="price-tag">₱5 – ₱10</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Brochures" data-price="27.5" data-section="brochures"><img src="brochure2.jpg"><div class="card-body"><h3>Brochures</h3><div class="price-tag">₱20 – ₱35</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Posters" data-price="490" data-section="posters"><img src="posterss2.png"><div class="card-body"><h3>Posters</h3><div class="price-tag">₱80 – ₱900</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Letterheads" data-price="9.5" data-section="letterheads"><img src="letterhead3.jpg"><div class="card-body"><h3>Letterheads</h3><div class="price-tag">₱7 – ₱12</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Menus" data-price="26.5" data-section="menus"><img src="menu2.jpg"><div class="card-body"><h3>Menus</h3><div class="price-tag">₱18 – ₱35</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Tickets" data-price="4.5" data-section="tickets"><img src="ticket3.jpg"><div class="card-body"><h3>Tickets</h3><div class="price-tag">₱3 – ₱6</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Banners" data-price="17.5" data-section="banners"><img src="banner2.png"><div class="card-body"><h3>Banners</h3><div class="price-tag">₱13 – ₱22</div><button class="add-btn">Add to Cart</button></div></div>
+
+<div class="service-card" data-name="Tarpaulin" data-price="15.5" data-section="tarpaulin"><img src="tarpaulin2.jpg"><div class="card-body"><h3>Tarpaulin</h3><div class="price-tag">₱13 – ₱18</div><button class="add-btn">Add to Cart</button></div></div>
+
+</div>
+</div>
+
+<!-- CART -->
+<div class="cart-sidebar">
+<h4 class="bold-title">My Cart</h4>
+<p>Total: <span id="cartTotal">₱0.00</span></p>
+<button class="checkout-btn" onclick="openOrderSummary()">Checkout</button>
+</div>
+
+</div>
+
+<!-- ACCOUNT -->
+<div id="accountModal" class="modal-bg">
+<div class="modal-box">
+<h4>My Account</h4>
+<p><b>PrintPro User</b></p>
+<p>user@printpro.com</p>
+<p>Ongoing Orders: <span id="ongoingOrders">0</span></p>
+<button class="btn btn-dark w-100" onclick="logout()">Log Out</button>
+</div>
+</div>
+
+<!-- ORDER SUMMARY -->
+<div id="orderModal" class="modal-bg">
+<div class="modal-box">
+
+<h3 class="highlight">ORDER SUMMARY</h3>
+
+<div id="orderList"></div>
+<hr>
+
+<p>Subtotal: ₱<span id="subtotal">0</span></p>
+<p>Discount: ₱<span id="discount">0</span></p>
+<p>Shipping Fee: ₱50</p>
+
+<h4 class="highlight">TOTAL: ₱<span id="total">0</span></h4>
+
+<select id="payment" onchange="showQR()" class="form-select">
+<option value="">Select Payment</option>
+<option value="gcash">GCash</option>
+<option value="bank">Bank</option>
+</select>
+
+<div id="qrBox" style="display:none;text-align:center;margin-top:10px;">
+<img id="qrImg" width="180">
+</div>
+
+<p style="margin-top:12px;font-size:13px;">
+By placing an order, you agree to the 
+<span class="terms-link" onclick="openTerms()">PRINT PRO TERMS</span>
+</p>
+
+<button class="btn btn-danger w-100 mt-2" onclick="closeOrderSummary()">Close</button>
+
+</div>
+</div>
+
+<!-- TERMS MODAL -->
+<div id="termsModal" class="modal-bg">
+<div class="modal-box">
+
+<h3 class="highlight">PRINT PRO TERMS</h3>
+
+<p>All orders are confirmed only after final approval and payment. Customers must carefully review and approve all designs before printing, as Print Pro is not responsible for errors once approved.</p>
+
+<p>Processing time depends on the order and workload, and rush orders may incur additional fees.</p>
+
+<p>No refunds are provided for approved and completed orders. Reprints are only allowed for printing errors caused by Print Pro and must be reported within 48 hours.</p>
+
+<p>Customers must ensure all files are correct and have rights to submitted content.</p>
+
+<p><b>By proceeding, you acknowledge and accept these terms.</b></p>
+
+<button class="btn btn-secondary w-100" onclick="closeTerms()">Close</button>
+
+</div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let alerts = JSON.parse(localStorage.getItem("alerts")) || [];
+
+/* ADD TO CART */
+document.querySelectorAll(".add-btn").forEach(btn=>{
+btn.onclick = (e)=>{
+let c=e.target.closest(".service-card");
+
+let item={name:c.dataset.name,price:+c.dataset.price,section:c.dataset.section};
+
+cart.push(item);
+localStorage.setItem("cart",JSON.stringify(cart));
+
+alerts.push(item.name + " added");
+localStorage.setItem("alerts",JSON.stringify(alerts));
+
+window.location.href="OrderForm.html#" + item.section;
+};
+});
+
+/* ALERTS */
+function toggleAlerts(){
+let box=document.getElementById("alertDropdown");
+box.style.display = box.style.display==="block"?"none":"block";
+
+box.innerHTML="";
+alerts.forEach(a=>box.innerHTML+=`<p>${a}</p><hr>`);
+}
+
+/* ACCOUNT */
+function openAccount(){
+document.getElementById("accountModal").style.display="block";
+document.getElementById("ongoingOrders").innerText=cart.length;
+}
+function logout(){
+window.location.href="Home.html";
+}
+
+/* ORDER SUMMARY */
+function openOrderSummary(){
+document.getElementById("orderModal").style.display="block";
+
+let list=document.getElementById("orderList");
+list.innerHTML="";
+
+cart.forEach(i=>list.innerHTML+=`<p>${i.name} - ₱${i.price}</p>`);
+
+let subtotal=cart.reduce((s,i)=>s+i.price,0);
+let discount=subtotal*0.1;
+let total=subtotal-discount+50;
+
+document.getElementById("subtotal").innerText=subtotal.toFixed(2);
+document.getElementById("discount").innerText=discount.toFixed(2);
+document.getElementById("total").innerText=total.toFixed(2);
+}
+function closeOrderSummary(){
+document.getElementById("orderModal").style.display="none";
+}
+
+/* TERMS */
+function openTerms(){
+document.getElementById("termsModal").style.display="block";
+}
+function closeTerms(){
+document.getElementById("termsModal").style.display="none";
+}
+
+/* QR */
+function showQR(){
+let v=document.getElementById("payment").value;
+let img=document.getElementById("qrImg");
+
+if(v==="gcash") img.src="gcash-qr.png";
+else if(v==="bank") img.src="bank-qr.png";
+
+document.getElementById("qrBox").style.display="block";
+}
+</script>
+
+</body>
+</html>

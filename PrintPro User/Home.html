@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrintPro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+:root{
+  --brand:#c81e1e;
+  --brand-dark:#a4161a;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  transition:opacity .5s ease;
+}
+
+body.fade-out{
+  opacity:0;
+}
+
+.site-header{
+  position:absolute;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:25px 60px;
+  z-index:10;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:1.8rem;
+  font-weight:800;
+}
+
+.brand img{
+  width:60px;
+  height:60px;
+  animation: glow 2s infinite ease-in-out;
+}
+
+@keyframes glow{
+  0%{filter: drop-shadow(0 0 6px #c81e1e);}
+  50%{filter: drop-shadow(0 0 18px #c81e1e);}
+  100%{filter: drop-shadow(0 0 6px #c81e1e);}
+}
+
+.login{
+  padding:10px 20px;
+  border:none;
+  border-radius:25px;
+  background:var(--brand);
+  color:#fff;
+  cursor:pointer;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.hero{
+  height:100vh;
+  background:url('https://cdn.corenexis.com/files/c/3326388720.png') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+}
+
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:700px;
+}
+
+.hero h1{
+  font-size:4rem;
+  font-weight:800;
+}
+
+.hero h2{
+  color:#ff4d4d;
+}
+
+.hero p{
+  margin-top:20px;
+  color:#ddd;
+}
+
+.hero button{
+  margin-top:30px;
+  padding:14px 28px;
+  border:none;
+  border-radius:25px;
+  background:var(--brand);
+  color:#fff;
+  cursor:pointer;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-box{
+  width:380px;
+  background:rgba(20,20,20,0.95);
+  border-radius:15px;
+  padding:25px;
+  color:#fff;
+  animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(.9);}
+  to{opacity:1; transform:scale(1);}
+}
+
+.modal-box input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #333;
+  background:#111;
+  color:#fff;
+}
+
+.password-wrap{
+  position:relative;
+}
+
+.eye{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:20px;
+  height:20px;
+  cursor:pointer;
+}
+
+.eye svg{
+  width:100%;
+  height:100%;
+  stroke:#fff;
+  fill:none;
+  stroke-width:2;
+}
+
+.eye .slash{
+  display:block;
+}
+
+.eye.show .slash{
+  display:none;
+}
+
+.modal-box button{
+  width:100%;
+  padding:11px;
+  margin-top:15px;
+  border:none;
+  border-radius:8px;
+  background:var(--brand);
+  color:#fff;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.switch{
+  text-align:center;
+  margin-top:10px;
+  color:#c81e1e;
+  cursor:pointer;
+}
+
+.msg{
+  margin-top:10px;
+  font-size:13px;
+  font-weight:600;
+}
+
+.error{color:#ff4d4d;}
+.success{color:#4dff88;}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <img src="Logo.png">
+    PrintPro
+  </div>
+  <button class="login" onclick="openModal('login')">Login</button>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>PRINT PRO</h1>
+    <h2>PRINT YOUR VISION</h2>
+    <p>We bring your ideas to life through high-quality printing and creative solutions.</p>
+    <button onclick="openModal('signup')">Get Started</button>
+  </div>
+</section>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+
+    <form id="loginForm" onsubmit="event.preventDefault(); login();">
+      <input type="text" id="loginEmail" placeholder="Email or Username">
+
+      <div class="password-wrap">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <div class="eye" onclick="togglePass('loginPassword', this)">
+          <svg viewBox="0 0 24 24">
+            <path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <line class="slash" x1="4" y1="4" x2="20" y2="20"/>
+          </svg>
+        </div>
+      </div>
+
+      <button type="submit">Login</button>
+      <div class="switch" onclick="switchForm('signup')">Create account</div>
+      <div class="msg" id="loginMsg"></div>
+    </form>
+
+    <form id="signupForm" style="display:none;" onsubmit="event.preventDefault(); signup();">
+      <input type="text" id="username" placeholder="Username">
+      <input type="text" id="email" placeholder="Email">
+      <input type="text" id="contact" placeholder="Contact Number">
+
+      <div class="password-wrap">
+        <input type="password" id="password" placeholder="Password">
+        <div class="eye" onclick="togglePass('password', this)">
+          <svg viewBox="0 0 24 24">
+            <path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <line class="slash" x1="4" y1="4" x2="20" y2="20"/>
+          </svg>
+        </div>
+      </div>
+
+      <button type="submit">Sign Up</button>
+      <div class="switch" onclick="switchForm('login')">Already have account?</div>
+      <div class="msg" id="signupMsg"></div>
+    </form>
+
+  </div>
+</div>
+
+<script>
+function openModal(type){
+  document.getElementById("modal").classList.add("active");
+  switchForm(type);
+}
+
+function switchForm(type){
+  document.getElementById("loginForm").style.display = type==="login"?"block":"none";
+  document.getElementById("signupForm").style.display = type==="signup"?"block":"none";
+}
+
+function togglePass(id, el){
+  let input=document.getElementById(id);
+  if(input.type==="password"){
+    input.type="text";
+    el.classList.add("show");
+  }else{
+    input.type="password";
+    el.classList.remove("show");
+  }
+}
+
+function goPage(){
+  document.body.classList.add("fade-out");
+  setTimeout(()=>{window.location.href="Dashboard.html"},500);
+}
+
+function signup(){
+  let u=username.value.trim();
+  let e=email.value.trim();
+  let c=contact.value.trim();
+  let p=password.value.trim();
+  let msg=signupMsg;
+
+  if(!u||!e||!c||!p){
+    msg.innerText="All fields are required.";
+    msg.className="msg error";
+    return;
+  }
+
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){
+    msg.innerText="Invalid email format.";
+    msg.className="msg error";
+    return;
+  }
+
+  localStorage.setItem(e,JSON.stringify({u,e,c,p}));
+  localStorage.setItem(u,JSON.stringify({u,e,c,p}));
+
+  msg.innerText="Account created!";
+  msg.className="msg success";
+
+  setTimeout(goPage,800);
+}
+
+function login(){
+  let input=loginEmail.value.trim();
+  let p=loginPassword.value.trim();
+  let msg=loginMsg;
+
+  let user=JSON.parse(localStorage.getItem(input));
+
+  if(!input||!p){
+    msg.innerText="Enter email or username and password.";
+    msg.className="msg error";
+    return;
+  }
+
+  if(user&&user.p===p){
+    msg.innerText="Login success!";
+    msg.className="msg success";
+    setTimeout(goPage,700);
+  }else{
+    msg.innerText="Wrong credentials.";
+    msg.className="msg error";
+  }
+}
+</script>
+
+</body>
+</html>
